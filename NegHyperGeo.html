@@ -52,9 +52,9 @@
 </ul>
 </nav>
 <h2 id="background">Background</h2>
-<p>The Negative Hypergeometric Distribution is the most confusing probability distribution you'll likely encounter in a probabiliy class. 
+<p>The Negative Hypergeometric Distribution is the most confusing probability distribution you'll likely ever encounter in a probability class. 
 Even the name is intimidating. It took me much, much, longer to understand it than
-anything else we covered, and I did not see an explination I  found straightforward and satisfactory anywhere
+anything else we covered, and I did not see an explanation I  found straightforward and satisfactory anywhere
 on the internet or in my textbook.
 I hope to tell a coherent story about this distribution that explains
 where it comes from and why it has, perhaps, the ugliest Probability Distribution Function you are likely to encounter.</p>
@@ -75,9 +75,9 @@ to deal with a Random Variable that can come in arbitrarily small quantities, li
 
 <h2 id="when">When to use the Negative Hypergeometric Distribution?</h2>
 
-<p>The Negative Hypergeometric Distribution is used when you want to know the odds of it taking <em>k</em> trials to achieve some fixed number of successes. Remember tha the probability distribution has paramaters and takes a variable—The variable taken by the Negative Hypergeometric Distribution is the number of trials, with the number of successes being baked into the trial itself.
+<p>The Negative Hypergeometric Distribution is used when you want to know the odds of it taking <em>k</em> trials to achieve some fixed number of successes. Remember that the probability distribution has parameters and takes a variable. The variable taken by the Negative Hypergeometric Distribution is the number of trials, with the number of successes being baked into the trial itself.
 This is in contrast to the non-negative distributions, where you specify a number of
-successes and estimate how long it will take to reach it.</p>
+trials in the distribution itself and estimate the number of successes.</p>
 
 
 
@@ -132,7 +132,7 @@ We'll need something different to attempt a problem like this.
 <p>Take the distribution \[NegHyperGeo \sim (W, N, S) \]</p>
 <p>Let's use the analogy of picking balls out of an urn. In this distribution, we have W White balls out of N Number of balls total. Of these, we are hoping to get S Successes. Assume we want to know the odds that, if we do X+S trials, we will get S successes. This is the Negative Hypergeometric distribution, featured below. 
  <img src="images\NegHyperGeo\NegHyperGeoPMF.png" alt="The Negative Hypergeometric Distribution">
-<p>What's confusing is that k is NOT the number of trials; It's the number of trials after you have done S trials. 
+<p>What's confusing is that k is NOT the number of trials; it's the number of trials after you have done S trials. 
 So, P(X = 0) is not the probability you get S balls in no trials, but the probability you get S balls in S trials, with the Sth trial being a success.
 P(X = 3) is the odds that, you do S + 3-1 trials, get S - 1 successes, and then on the S+3rd trial you get your Sth success.
 <p>Now that we have a definition of k, it should be clear that the PMF only applies for \( k = 0, 1, 2, ... (N-S) \), and in all other cases P(X=k) is 0. To get S successes, you need at least S trials, but if k>N-S,
@@ -142,12 +142,12 @@ then you would run out of balls. </p>
 <hr>
 <h2 id="Break">The Distribution Broken Down</h2>
 <p>In most probability distributions, you can kind of look at the PMF and see what each component
-is doing. The Negative Hypergeometric Distribution's PMf is ab it more complicated, but nevertheless
+is doing. The Negative Hypergeometric Distribution's PMf is a bit more complicated, but nevertheless
 can be broken down and understood.</p>
-Let's take the first choice function in the numberator of NegHyperGeo.
+Let's take the first choice function in the numerator of NegHyperGeo.
  <img src="images\NegHyperGeo\Choice1.png" alt="S+k+1 Choose S-1" width="100" height="100">
 <p>This is, in effect, saying that we take the number of successes we want, add k, the additional number 
-of balls we are removing from our figurative urn, and then subtract 1. S + k is fairly self explanitory,
+of balls we are removing from our figurative urn, and then subtract 1. S + k is fairly self-explanitory,
 as we are trying to see the number of ways to choose that many successes. The -1 comes in, a bit more confusingly,
 as we are only looking at selections before k, rather than at k itself. We want to know that, if the S+kth draw is a success, then how many ways can we arrange the S-1 successes before it.
 That is the story of the first choice function in the PMF.</p>
@@ -157,20 +157,20 @@ Next, let's look at the second term:
 <p>What this tells us is  that, out of N-S-k(Total Number - Successes Drawn- Additional draws), how many ways can you arrange the remaining white balls. 
 N-S-k, tells us how many balls total are remaining in the urn after our random variable k number of draws. 
 W-S tells us how many white balls are remaining after our S+k draws. </p>
-<p> With this, we have the entire numberator complete. This is the total number of permutations possible with S successes in S + k draws. The only thing remaining is to divide it by the total number of permutations possible</p>
+<p> With this, we have the entire numerator complete. This is the total number of permutations possible with S successes in S + k draws. The only thing remaining is to divide it by the total number of permutations possible</p>
   <img src="images\NegHyperGeo\Choice3.png" alt="N Choose W" width="100" height="100">
 <p>Putting it all together, this gets us to.</P>
  <img src="images\NegHyperGeo\AllTogether.png" alt="The Negative Hypergeometric Distribution Explained">
 <p> To recap, the Negative Hypergeometric distribution tells us that, if we have a ball with W white balls and N balls, of which we want S white balls, the likelihood that we get that many balls on the S + kth draw.
 <hr>
 <h2 id="exp">The Expectation of the Negative Hypergeometric Distribution</h2>
-<p>This is more of a footnote, as I have no intention of computing an unweildy summation or doing a roundabout proof with indicator
+<p>This is more of a footnote, as I have no intention of computing an unwieldy summation or doing a roundabout proof with indicator
 variables, but I do think the expectation of NegHyperGeo is worth a mention.
- <img src="images\NegHyperGeo\EX.png" alt="Expectation of NegHyperGeo = S(N-W)/(W+1)" width="100" height="150">
+ <img src="	images\NegHyperGeo\EX.png" alt="Expectation of NegHyperGeo = S(N-W)/(W+1)" width="100" height="150">
 
 <hr>
 <h2 id="Cite">Citations</h2>
-<p>The textbook I most closely modeled my guide off was Blitzstein and Hwang's Introduction to Probability.
+<p>The textbook I most closely modeled my guide on was Blitzstein and Hwang's Introduction to Probability.
 <div style=“text-indent: -36px; padding-left: 36px;”>
 <p>Blitzstein, Joseph  K, and Jessica Hwang. “Geometric and Negative Binomial.” Essay. In Introduction to Probability, 2nd ed., 219–20. Boca Raton, Florida: CRC Press, 2019. </p>
 </div>
