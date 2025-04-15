@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Brendan Heaney" />
+  <title>The Normal Model</title>
+  <link rel="stylesheet" href="src/reset.css" />
+  <link rel="stylesheet" href="src/index.css" />
+</head>
+<body>
+<table class="header">
+  <tr>
+    <td colspan="2" rowspan="2" class="width-auto">
+      <h1 class="title">What is the Normal Model?</h1>
+    </td>
+    <th>Version</th>
+    <td class="width-min">v0.1.0</td>
+  </tr>
+  <tr>
+    <th>Updated</th>
+    <td class="width-min"><time style="white-space: pre;">2025-04-15</time></td>
+  </tr>
+  <tr>
+    <th class="width-min">Author</th>
+    <td class="width-auto">Brendan Heaney</td>
+    <th class="width-aut">License</th>
+    <td>MIT</td>
+  </tr>
+</table>
+<a href="index.html">Homepage</a>
+
+<nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Contents</h2>
+<ul class="incremental">
+<li><a href="#introduction" id="toc-introduction"> Introduction </a></li>
+<li><a href="#intu" id="toc-the-basics">Intuition</a></li>
+<li><a href="#math" id="toc-lists"> The Math Behind the Normal Distribution </a></li>
+<li><a href="#example" id="toc-lists">Some Examples</a></li>
+<li><a href="#Cite" id="toc-discussion">Citations</a></li>
+<li><a href="#Contact" id="toc-discussion">Contact</a></li>
+</ul>
+</nav>
+<h2 id="introduction">Introduction</h2>
+<p>The Normal Distribution describes a symmetrical, unskewed, bell-shaped set of data around the mean, where values closer to the mean are more likely to occur than values further from the mean. </p>
+<p>It has two parameters: The mean, representing the center, and the standard deviation. Interestingly, the mean and median are equal.</p>
+
+<p>We use the normal distribution to find the probability that a random variable is less than or equal than a certain value. For example, you may want to answer the question “What percent of men are shorter than 5’11?” The normal model would be the tool to use for this.</p>
+
+
+<h2 id="intu">Intuition</h2>
+<p>The Normal Distribution is impressive because it comes up everywhere. If you see a distribution that looks like this, it’s probably normal or nearly normal.</p>
+
+<img src="images\Normal\BellCurve.png" alt="A Generic Normal Distribution" width="300" height="300">
+<p>Remember back to the 68-95-99.7 rule. The space between Z = -1 and Z = 1 contains 68% of the data, (-2, 2) contains 95%, and (-3 , 3) contains 99.7%. Whenever something like that comes into play, it’s a normal distribution or a model close enough to it.</p>
+
+<p>Let’s take an example you may not expect to be normal: Shoe Size. 
+<img src="images\Normal\ShoeSize.png" alt="Calculating Z = 1/2" width="300" height="300">
+<p> This is bimodal, but within men and women shoe size is remarkably close to a normal distribution. You will notice that the X-axis has switched from Z-scores to size. Z-score is a unitless variable that you can use to compare almost any two instances in a normal model. You can discuss if a dog’s weight is more extreme than an earthquake’s magnitude. It tells you only what percent of the data is less than it, regardless of the model.</p>
+
+ Let’s use another example of a coin toss.</p>
+<img src="images\Normal\CoinToss.png" alt="Number of heads after flipping a fair coin 4 times" width="300" height="300">
+<p>This, again, has the same iconic <em>bell curve</em> shape you find in the Normal Distribution. It’s strange how they line up with each other despite seeming totally different. The normal distribution has some amazing properties. </p>
+<hr>
+
+<h2 id="math">The Math Behind the Normal Distribution</h2>
+<p>There’s three steps to going from a normal model to a probability.</p>
+<ul class="incremental">
+<li>First, set up a normal model with the mean(μ) and standard deviation(σ), and find the value of x you want to find the Z-score for </li>
+<li>Secondly, set up the fraction Z = (x - μ) / σ</li>
+<img src="images\Normal\ZFormula.png" alt="Z = (x - μ) / σ" width="200" height="200">
+
+<li>Finally, take your Z-score to a Z-table and find the corresponding probability of a Z-score equal to or lesser than it</li>
+</ul>
+<p>What this does, intuitively, is find the difference between your value and the mean, and then divides it by how much values tend to vary around the mean. This means that the normal distribution is normalized. You can compare one Z-Score from one normal model to another Z-Score from another normal model and know which one is more extreme or more above average. The Z-Score tells you where on the normal distribution you are, without telling you what your specific normal distribution looks like. </p
+<hr>
+<h2 id="z">Reading a Z-Table</h2>
+<p>Usually, we want the probability of getting a value the same as or less than a value rather than the number of standard deviations from the mean it is. The math for this is extremely cumbersome (Look up the Gaussian Integral if you’d like to see some of it), so instead we use a Z-Table, that lists out the probabilities of a Z-score less than each Z-score.</p>
+
+<p>To read a Z-table, you take your Z-Score, find the <em>Ones and Tenths Place</em> on the leftmost column, the <em>hundredths</em> place on the top row, and go to the place where they intersect.</p>
+<p>This makes more sense with an example. Let’s take Z = 2.73. Open up <a href="https://z-table.com/">your Z-table of choice</a>, select 2.7 in the left column, and 0.03 in the top row.</p>
+<img src="images\Normal\ZExample.png" alt="Calculating Z = 1/2" width="400" height="400">
+<p>Finding the place where these two intersect on the table, we see the probability of a Z-Score under 2.73 is .9968, or 99.68%. This gets significantly easier the more you do it.</p>
+<hr>
+<h2 id="example">Some Examples</h2>
+<p>Imagine you have to catch a train, that comes at 9:00, and has a standard deviation of departure time of 6 minutes. Due to a broken escalator, you arrive 3 minutes late. What is the chance you make your train?<p>
+
+<p>Some things to note From this:</o>
+<p>First, this is a normal model with a mean of 9:00 and a standard deviation of 6.</p>
+<p>Second, we arrive at 9:03</p>
+<p>Third, we’re looking for the chance that our arrival time is GREATER than the train’s departure time. Remember that the normal distribution tells you the odds that a random variable is LESS than a certain amount.</p>
+<br>
+<p>Now, we have everything we need. The first thing to do is to find a Z-Score.</p>
+<img src="images\Normal\CalcZ.png" alt="Calculating Z = 1/2">
+
+<p>Remember that 0.5 is just a Z-Score. It’s not a probability, and other than comparisons, there’s very little we can do with this. We need to find the probability of a Z-Score under 0.5, and that’s what the Z-Table is for. </p>
+<p>Find the ones and tenths place in the left column, and the hundredths place in the top row.</p>
+<img src="images\Normal\ZProblem.png" alt="Reading the Z Table">
+<p>This is where the magic happens. We have converted a Z-Score, which is an unintuitive and opaque number with no clear day-to-day meaning, into the probability that the train departs before 9:03, getting <em>.6915,</em> or <em>69.15%</em>. Now, we just have to find the probability it departs after 9:03 to get the probability we make our train.</p>
+
+<p>To do this, you can just use the compliment rule, subtract the prior probability from 1, and find the odds are 0.3085%, or 30.85%. That’s it!</p>
+
+<p>Hope this was of some use. If you have any other questions, comments, or concerns, feel free to contact me.</p>
+<hr>
+
+<h2 id="Cite">Citations</h2>
+<p></p>
+<div style=“text-indent: -36px; padding-left: 36px;”>
+<p>Chen, James. “Normal Distribution: What It Is, Uses, and Formula.” Investopedia. Accessed April 14, 2025. https://www.investopedia.com/terms/n/normaldistribution.asp. </p>
+<p>Mickle, Karen, Bridget Munro, Stephen Lord, Hylton Menz, and Julie Steele. 2010. “Foot Shape of Older People: Implications for Shoe Design.” Footwear Science 2 (September):131–39. https://doi.org/10.1080/19424280.2010.487053.</p>
+<p>“I’ll Give You a Definite Maybe an Introductory Handbook for Probability, Statistics, and Excel.” I’ll Give You a Definite Maybe, Section 5: A Normal Distribution. Accessed April 14, 2025. https://web.viu.ca/johnstoi/maybe/maybe5.htm. </p>
+</div>
+<hr>
+
+<h2 id="Contact">Contact</h2>
+
+<p>I've enjoyed putting together this website. Full credit to the <a
+href="https://github.com/owickstrom/the-monospace-web">Monospace Web</a>, who created the template used for this.</p>
+<p> If you'd like to contact me, my information is below</p>
+<p><tab>Brendan Heaney, Binghamton University Class of 2027</p>
+ <p>Personal Email:<em> brendantheaney@gmail.com</em></p>
+ <p>    University Email:<em> bheaney@binghamton.edu</em></p>
+ <p><a href="https://www.linkedin.com/in/brendan-heaney-573815214/">My LinkedIn</a></p>
+
+ <p><a href="index.html">Homepage</a></p>
+
+  <div class="debug-grid"></div>
+  <script src="src/index.js"></script>
+</body>
+</html>
