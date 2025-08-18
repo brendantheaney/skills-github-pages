@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solow Growth Model Simulator</title>
+    <!-- Chart.js for plotting -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Styles based on Monospace Web Template -->
+    <style>
+        /* Sourced from index.css and reset.css */
+        :root {
+            --font-family: "JetBrains Mono", monospace;
+            --line-height: 1.20rem;
+            --border-thickness: 2px;
+            --text-color: #000;
+            --text-color-alt: #666;
+            --background-color: #fff;
+            --background-color-alt: #eee;
+            --font-weight-normal: 500;
+            --font-weight-medium: 600;
+            --font-weight-bold: 800;
+            font-family: var(--font-family);
+            font-optical-sizing: auto;
+            font-weight: var(--font-weight-normal);
+            font-style: normal;
+            font-variant-numeric: tabular-nums lining-nums;
+            font-size: 16px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-color: #fff;
+                --text-color-alt: #aaa;
+                --background-color: #000;
+                --background-color-alt: #111;
+            }
+        }
+
+        html, body, div, span, h1, h2, p, table, tr, th, td, canvas {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        * { box-sizing: border-box; }
+        * + * { margin-top: var(--line-height); }
+
+        html {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            background: var(--background-color);
+            color: var(--text-color);
+        }
+
+        body {
+            position: relative;
+            width: 100%;
+            padding: var(--line-height) 2ch;
+            max-width: calc(min(80ch, 100%));
+            line-height: var(--line-height);
+        }
+
+        h1, h2 {
+            font-weight: var(--font-weight-bold);
+            margin: calc(var(--line-height) * 2) 0 var(--line-height);
+            line-height: var(--line-height);
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 2rem;
+            line-height: calc(2 * var(--line-height));
+            margin-bottom: calc(var(--line-height) * 2);
+        }
+
+        h2 { font-size: 1rem; }
+
+        hr {
+            position: relative;
+            display: block;
+            height: var(--line-height);
+            margin: calc(var(--line-height) * 1.5) 0;
+            border: none;
+        }
+
+        hr:after {
+            display: block;
+            content: "";
+            position: absolute;
+            top: calc(var(--line-height) / 2 - var(--border-thickness));
+            left: 0;
+            width: 100%;
+            border-top: calc(var(--border-thickness) * 3) double var(--text-color);
+            height: 0;
+        }
+
+        p { margin-bottom: var(--line-height); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 0 calc(var(--line-height) * 2);
+        }
+
+        th, td {
+            border: var(--border-thickness) solid var(--text-color);
+            padding: calc((var(--line-height) / 2)) calc(1ch - var(--border-thickness) / 2);
+            line-height: var(--line-height);
+            vertical-align: top;
+            text-align: left;
+        }
+
+        th { font-weight: 700; }
+        .width-min { width: 0%; white-space: nowrap; }
+        .width-auto { width: 100%; }
+
+        .header h1 { margin: 0; }
+        .header tr td:last-child { text-align: right; }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: calc(var(--line-height) / 2) 2ch; /* Reduced vertical gap */
+            align-items: center;
+        }
+        
+        .controls-grid > * {
+            margin-top: 0; /* Override the default margin for elements in the grid */
+        }
+
+        input[type=number] {
+            border: var(--border-thickness) solid var(--text-color);
+            padding: calc(var(--line-height) / 2 - var(--border-thickness)) calc(1ch - var(--border-thickness));
+            font: inherit;
+            background: var(--background-color);
+            color: var(--text-color);
+            width: 10ch;
+            text-align: right;
+        }
+        
+        input[type=number] { -moz-appearance: textfield; }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+          -webkit-appearance: none; 
+          margin: 0; 
+        }
+    </style>
+</head>
+<body>
+
+    <table class="header">
+      <tr>
+        <td colspan="2" rowspan="2" class="width-auto">
+          <h1 class="title">Solow Growth Model Simulator</h1>
+        </td>
+        <th>Version</th>
+        <td class="width-min">v0.1.0</td>
+      </tr>
+      <tr>
+        <th>Updated</th>
+        <td class="width-min"><time style="white-space: pre;">2025-08-18</time></td>
+      </tr>
+      <tr>
+        <th class="width-min">Author</th>
+        <td class="width-auto">Brendan Heaney</td>
+        <th class="width-min">Source</th>
+        <td class="width-auto"><em>Monospace Web</em></td>
+      </tr>
+    </table>
+
+<p>The Solow-Swan Model, often simply called the Solow Model, is an economic model that attempts to explain long run economic growth by capital accumulation and growth in productivity. It typically uses the Cobb-Douglas production function, with constant returns to scale and diminishing marginal utility of Capital and Labor. This tool lets you tweak the paramaters to see how they affect the evolution of the long-run economy.</p>
+    <hr>
+
+    <h2>Economic Parameters</h2>
+    <div class="controls-grid">
+        <label for="L0">Initial Labor (L₀)</label>
+        <input type="number" id="L0" value="10" step="1">
+        
+        <label for="K0">Initial Capital (K₀)</label>
+        <input type="number" id="K0" value="5" step="1">
+
+        <label for="A0">Initial Productivity (A₀)</label>
+        <input type="number" id="A0" value="2" step="0.1">
+
+        <label for="capital_share">Capital Share (α)</label>
+        <input type="number" id="capital_share" value="0.33" step="0.01">
+
+        <label for="s">Savings Rate (s)</label>
+        <input type="number" id="s" value="0.2" step="0.01">
+
+        <label for="delta">Depreciation Rate (δ)</label>
+        <input type="number" id="delta" value="0.1" step="0.01">
+
+        <label for="n">Labor Growth (n)</label>
+        <input type="number" id="n" value="0" step="0.005">
+
+        <label for="g">Productivity Growth (g)</label>
+        <input type="number" id="g" value="0" step="0.005">
+
+        <label for="periods">Time Periods</label>
+        <input type="number" id="periods" value="50" step="10">
+    </div>
+
+    <hr>
+    
+    <h2>Simulation Results</h2>
+    
+    <div class="charts-container">
+        <canvas id="totalCapitalChart"></canvas>
+        <canvas id="solowDiagramChart"></canvas>
+    </div>
+
+    <script>
+        // --- 1. Get References to HTML Elements ---
+        const controls = {
+            L0: document.getElementById('L0'), K0: document.getElementById('K0'), A0: document.getElementById('A0'),
+            capital_share: document.getElementById('capital_share'), s: document.getElementById('s'), delta: document.getElementById('delta'),
+            n: document.getElementById('n'), g: document.getElementById('g'), periods: document.getElementById('periods'),
+        };
+
+        // --- 2. Chart.js Global Font Configuration ---
+        Chart.defaults.font.family = "'JetBrains Mono', monospace";
+        Chart.defaults.font.size = 12;
+        Chart.defaults.color = getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim();
+
+        // --- 3. Chart.js Initialization ---
+        const ctx1 = document.getElementById('totalCapitalChart').getContext('2d');
+        const totalCapitalChart = new Chart(ctx1, {
+            type: 'line',
+            data: { 
+                labels: [], 
+                datasets: [
+                    { label: 'Total Capital (K)', data: [], borderColor: '#3b82f6', borderWidth: 2, pointRadius: 0, tension: 0.1 },
+                    { label: 'Steady State Path (K*)', data: [], borderColor: 'rgba(0,0,0,0.5)', borderWidth: 2, pointRadius: 0, borderDash: [5, 5] }
+                ] 
+            },
+            options: { 
+                responsive: true, 
+                plugins: { title: { display: true, text: 'Evolution of Total Capital Stock', font: { size: 16 } }, legend: { position: 'top' } }, 
+                scales: { x: { title: { display: true, text: 'Time (Periods)' } }, y: { title: { display: true, text: 'Capital Stock' }, beginAtZero: true } } 
+            }
+        });
+
+        const ctx3 = document.getElementById('solowDiagramChart').getContext('2d');
+        const solowDiagramChart = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    { label: 'Output per Worker (f(k))', data: [], borderColor: '#84cc16', borderWidth: 2, pointRadius: 0, tension: 0.1 },
+                    { label: 'Investment (s*f(k))', data: [], borderColor: '#f97316', borderWidth: 2, pointRadius: 0, tension: 0.1 },
+                    { label: 'Break-Even Investment ((δ+n)k)', data: [], borderColor: '#6b7280', borderWidth: 2, pointRadius: 0 }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: { title: { display: true, text: 'Solow Growth Diagram', font: { size: 16 } }, legend: { position: 'top' } },
+                scales: { x: { title: { display: true, text: 'Capital per Worker (k = K/L)' }, beginAtZero: true }, y: { title: { display: true, text: 'Output per Worker (y = Y/L)' }, beginAtZero: true } }
+            }
+        });
+
+        // --- 4. Core Simulation Logic ---
+        function runSolowSimulation(params) {
+            const periods = params.periods;
+            const capital = new Array(periods).fill(0);
+            const steady_state_capital_path = new Array(periods).fill(0);
+
+            capital[0] = params.K0;
+            
+            const denominator = params.delta + params.n + params.g;
+            let steady_state_k_effective = 0;
+            if (denominator > 0) {
+                steady_state_k_effective = (params.s / denominator) ** (1 / (1 - params.capital_share));
+            }
+
+            const labor_path = new Array(periods).fill(0);
+            const tech_path = new Array(periods).fill(0);
+            labor_path[0] = params.L0;
+            tech_path[0] = params.A0;
+
+            for (let t = 0; t < periods - 1; t++) {
+                labor_path[t+1] = labor_path[t] * (1 + params.n);
+                tech_path[t+1] = tech_path[t] * (1 + params.g);
+            }
+
+            for (let t = 0; t < periods - 1; t++) {
+                const effective_labor = tech_path[t] * labor_path[t];
+                const output = (capital[t] ** params.capital_share) * (effective_labor ** (1 - params.capital_share));
+                const investment = params.s * output;
+                const change_in_capital = investment - (params.delta * capital[t]);
+                capital[t + 1] = capital[t] + change_in_capital;
+            }
+            
+            for (let t = 0; t < periods; t++) {
+                steady_state_capital_path[t] = steady_state_k_effective * tech_path[t] * labor_path[t];
+            }
+
+            return { capital, steady_state_capital_path };
+        }
+
+        function generateDiagramData(params) {
+            const denominator = params.delta + params.n;
+            let steady_state_k_per_worker = 0;
+            if (denominator > 0) {
+                const A_raised = params.A0 ** (1 - params.capital_share);
+                steady_state_k_per_worker = ((params.s * A_raised) / denominator) ** (1 / (1 - params.capital_share));
+            }
+
+            const k_max = steady_state_k_per_worker > 0 ? steady_state_k_per_worker * 2 : 20;
+            const num_points = 100;
+            const k_values = Array.from({ length: num_points }, (_, i) => (i / (num_points - 1)) * k_max);
+
+            const A_raised = params.A0 ** (1 - params.capital_share);
+            const output_values = k_values.map(k => A_raised * (k ** params.capital_share));
+            const investment_values = output_values.map(y => params.s * y);
+            const breakeven_values = k_values.map(k => (params.delta + params.n) * k);
+
+            return { k_values, output_values, investment_values, breakeven_values };
+        }
+
+        // --- 5. Update Function and Event Listeners ---
+        function updateSimulation() {
+            const params = {
+                L0: parseFloat(controls.L0.value), K0: parseFloat(controls.K0.value), A0: parseFloat(controls.A0.value),
+                capital_share: parseFloat(controls.capital_share.value), s: parseFloat(controls.s.value), delta: parseFloat(controls.delta.value),
+                n: parseFloat(controls.n.value), g: parseFloat(controls.g.value), periods: parseInt(controls.periods.value),
+            };
+            
+            const timeSeriesResults = runSolowSimulation(params);
+            const diagramData = generateDiagramData(params);
+            const time_periods = Array.from({ length: params.periods }, (_, i) => i);
+
+            totalCapitalChart.data.labels = time_periods;
+            totalCapitalChart.data.datasets[0].data = timeSeriesResults.capital;
+            totalCapitalChart.data.datasets[1].data = timeSeriesResults.steady_state_capital_path;
+            totalCapitalChart.update('none');
+
+            solowDiagramChart.data.labels = diagramData.k_values.map(k => k.toFixed(1));
+            solowDiagramChart.data.datasets[0].data = diagramData.output_values;
+            solowDiagramChart.data.datasets[1].data = diagramData.investment_values;
+            solowDiagramChart.data.datasets[2].data = diagramData.breakeven_values;
+            solowDiagramChart.update('none');
+        }
+
+        Object.values(controls).forEach(input => {
+            input.addEventListener('input', updateSimulation);
+        });
+
+        // Initial Run on page load
+        updateSimulation();
+
+    </script>
+<h2 id="Cite">Citations</h2>
+<div style=“text-indent: -36px; padding-left: 36px;”>
+<p>Mankiw, N. Gregory. 2016. Principles of Microeconomics. 8th ed. Mason, OH: CENGAGE Learning Custom Publishing.</p>
+</div>
+<hr>
+
+<h2 id="Contact">Contact</h2>
+
+<p>I've enjoyed putting together this website. Full credit to the <a
+href="https://github.com/owickstrom/the-monospace-web">Monospace Web</a>, who created the template used for this.</p>
+<p> If you'd like to contact me, my information is below</p>
+<p><tab>Brendan Heaney, Binghamton University Class of 2027</p>
+ <p>Personal Email:<em> brendantheaney@gmail.com</em></p>
+ <p>    University Email:<em> bheaney@binghamton.edu</em></p>
+ <p><a href="https://www.linkedin.com/in/brendan-heaney-573815214/">My LinkedIn</a></p>
+
+ <p><a href="index.html">Homepage</a></p>
+
+  <div class="debug-grid"></div>
+  <script src="src/index.js"></script>
+
+</body>
+</html>
