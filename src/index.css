@@ -461,3 +461,30 @@ label input {
 .debug-toggle-label {
   text-align: right;
 }
+.controls-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: calc(var(--line-height) / 2) 2ch; /* Reduced vertical gap */
+    align-items: center;
+}
+
+.controls-grid > * {
+    margin-top: 0; /* Override the default margin for elements in the grid */
+}
+
+input[type=number] {
+    border: var(--border-thickness) solid var(--text-color);
+    padding: calc(var(--line-height) / 2 - var(--border-thickness)) calc(1ch - var(--border-thickness));
+    font: inherit;
+    background: var(--background-color);
+    color: var(--text-color);
+    width: 10ch;
+    text-align: right;
+}
+
+input[type=number] { -moz-appearance: textfield; }
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
