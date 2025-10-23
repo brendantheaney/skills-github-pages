@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feldman-Mahalanobis Model Simulator</title>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="src/reset.css" />
+    <link rel="stylesheet" href="src/index.css" />
+	<style>
+      /* This overrides your index.css to protect MathJax.
+        It resets the styles for tables, fonts, and margins
+        ONLY for elements inside a MathJax equation.
+      */
+      .MathJax_Display, .MathJax {
+        font-family: initial !important; 
+        line-height: normal !important;
+      }
+      .MathJax_Display * + *, .MathJax * + * {
+        margin-top: 0 !important;
+      }
+      .MathJax_Display table, .MathJax_Display th, .MathJax_Display td,
+      .MathJax table, .MathJax th, .MathJax td {
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        line-height: normal !important;
+      }
+      .MathJax_Display sub, .MathJax sub {
+        width: auto !important;
+        line-height: normal !important;
+        font-size: 100% !important;
+        vertical-align: baseline !important;
+      }
+    </style>
+</head>
+<body>
+
+    <table class="header">
+      <tr>
+        <td colspan="2" rowspan="2" class="width-auto">
+          <h1 class="title">Feldman-Mahalanobis Model Simulator</h1>
+        </td>
+        <th>Version</th>
+        <td class="width-min">v0.1.0</td>
+      </tr>
+      <tr>
+        <th>Updated</th>
+        <td class="width-min"><time style="white-space: pre;">2025-08-18</time></td>
+      </tr>
+      <tr>
+        <th class="width-min">Author</th>
+        <td class="width-auto">Brendan Heaney</td>
+        <th class="width-min">Source</th>
+        <td class="width-auto"><em>Monospace Web</em></td>
+      </tr>
+    </table>
+	<p style="text-align: center;">"Nehru looked for the magic equations. P.C. Mahalanobis, a quantitative economist with a poor sense of the real economy, supplied these."</p>
+<p>-Tirthankar Roy, Indian Economist</p>
+<p>The Feldman-Mahalanobis model is an economic growth model independently invented by Soviet economist Grigory Feldman in 1928 and Indian statistician Prasanta Chandra Mahalanobis in 1953,
+most notable used in India's second five year plan under Nehru's INC. This article will go over the model itself, the assumptions behind it, and the history within.</p>
+    <hr>
+
+<nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Contents</h2>
+<ul class="incremental">
+<li><a href="#background" id="toc-introduction">Background</a></li>
+<li><a href="#Equation" id="toc-the-basics">The Equation</a></li>
+<li><a href="#Model" id="toc-lists">Feldman-Mahalanobis Simulator</a></li>
+<li><a href="#History" id="toc-lists">History and Assumptions</a></li>
+
+<li><a href="#Cite" id="toc-discussion">Citations</a></li>
+
+<li><a href="#Contact" id="toc-contact">Contact</a></li>
+
+</ul>
+</nav>
+    <hr>
+	 <h2 id="Equation">The Equation</h2>
+<p>$$Y_t = Y_0\left[1+\alpha_0 \frac{\lambda_k\beta_k+\lambda_c\beta_c}{\lambda_k\beta_k}\left[(1+\lambda_k\beta_k)^t-1\right]\right]$$</p><p>\(Y_t\): Economic Output at time t</p>
+<p>\(Y_0\): Economic Output at time 0</p>
+<p>\(\alpha_0\): The Savings Rate, or fraction of national income set aside for investment</p>
+<p>\(\lambda_k\): The share of total investment set aside for capital goods</p>
+<p>\(\lambda_c\): The share of total investment set aside for consumer goods</p>
+<p>\(\beta_k\): The amount of new capital goods produced from $1 worth of investment.</p>
+<p>\(\beta_c\): The amount of new consumer goods produced from $1 worth of investment.</p>
+<p>\(\lambda_k+\lambda_c = 1\)</p>
+<p>\(0<\alpha_0\)<1)</p>
+
+<p></p>
+<br>
+<p>Now that we have all the atoms, we can build up to the equation</p>
+<p>$$[(1+\lambda_k\beta_k)^t-1]$$</p>
+<p>This term reflects the growth of savings. In the Mahalanobis model, this is entirely dependent upon capital goods. The term \(\beta_k\lambda_k\) reflects the
+growth rate of capital. For example, if 30% of investment is set aside for capital and five dollars worth of investment create one dollar of capital,
+then growth would be \(0.3 * 0.2 = 0.06\), or \(6\%\) annually. This is, essentially, the interest rate on savings.
+We add one to get the <em> accumulation factor </em>, then exponentiate it by the number of time periods \(t\), and subtract one to get the scaling factor of new growth.</p>
+<p>The main takeaway is that this is an <em> exponential function</em> of capital.</p>This is the only factor that can create exponential growth in this model, and it is entirely dependent on the efficiency of
+the capital sector and the share of investment from capital.</p>
+
+For example, say that</p>
+<p>$$\frac{\lambda_k\beta_k+\lambda_c\beta_c}{\lambda_k\beta_k}$$</p>
+<p>This term is what goes from our growth in savings to growth in output. \(\lambda_k\) and \(\lambda_c\) "Share" the total savings, 
+<p>Alternately, it may be expressed as</p>
+<p>$$1+\frac{\lambda_c\beta_c}{\lambda_k\beta_k}$$</p>
+<p> With this, it's easy to see that the term takes the new accumulation factor, and then scales it by one plus the ratio of consumer good production to capital good production. It answers the question 
+"For each dollar of capital goods created, how many dollars of total output are created?"
+ If the consumer goods sector is more efficient(That is, \(\beta_c > \beta_k \)), then in the short term reallocating capital to consumer goods will boost output, but in the long term the exponential growth function dominates.
+<p>Let's begin putting it all together now.</p>
+$$\frac{\lambda_k\beta_k+\lambda_c\beta_c}{\lambda_k\beta_k}[(1+\lambda_k\beta_k)^t-1]$$
+<p>This equation tells you for each dollar of savings, how many new dollars of output will be produced at time t. For example, if we set up our equation with \(\lambda_k = 0.3, \lambda_c = 0.7, \beta_k = 0.25, \beta_c = 0.4, t = 5\), then one dollar of additional savings produces about $2.06 of output five years down the line.</p>
+  <p>$$[1+\alpha_0*\frac{\lambda_k\beta_k+\lambda_c\beta_c}{\lambda_k\beta_k}[(1+\lambda_k\beta_k)^t-1]$$</p>
+<p> We then scale by \(\alpha_0\), our savings rate, to determine just how much growth would come from this. Then, we add one, to figure out how much the economy is scaled by. Using the example from the last section, 
+if savings was 10%, this would result in the economy being rougly 120.6% the size of the economy at \(t_o\)
+ <p>$$Y_t = Y_0[1+\alpha_0*\frac{\lambda_k\beta_k+\lambda_c\beta_c}{\lambda_k\beta_k}[(1+\lambda_k\beta_k)^t-1]]$$</p>
+<p>Finally, we take our scale factor and multiply it by GDP at the \(t_o\) to determine output at \(t_k\)</p>
+ <p>$$Y_t = Y_0[1+\alpha_0*\frac{\lambda_k\beta_k+\lambda_c\beta_c}{\lambda_k\beta_k}[(1+\lambda_k\beta_k)^t-1]]$$</p>
+
+<h2 id="Model">Economic Parameters</h2>
+    <div class="controls-grid">
+        <label for="Y0">Initial National Income (Y₀)</label>
+        <input type="number" id="Y0" value="100" step="10">
+        
+        <label for="alpha0">Initial Investment Rate (α₀)</label>
+        <input type="number" id="alpha0" value="0.2" step="0.01">
+
+        <label for="lambda_k">Investment Share (K-sector) (λₖ)</label>
+        <input type="number" id="lambda_k" value="0.3" step="0.01">
+
+        <label for="beta_k">Productivity (K-sector) (βₖ)</label>
+        <input type="number" id="beta_k" value="0.25" step="0.01">
+
+        <label for="beta_c">Productivity (C-sector) (β_c)</label>
+        <input type="number" id="beta_c" value="0.4" step="0.01">
+
+        <label for="periods">Time Periods</label>
+        <input type="number" id="periods" value="50" step="10">
+        
+        <label for="lambda_k_alt">Alternative λₖ (for comparison)</label>
+        <input type="number" id="lambda_k_alt" value="0.1" step="0.01">
+    </div>
+
+    <hr>
+    
+    <h2>Simulation Results</h2>
+    
+    <div class="charts-container">
+        <canvas id="mainScenarioChart"></canvas>
+        <canvas id="comparisonChart"></canvas>
+    </div>
+
+    <script>
+        // --- 1. Get References to HTML Elements ---
+        const controls = {
+            Y0: document.getElementById('Y0'), alpha0: document.getElementById('alpha0'),
+            lambda_k: document.getElementById('lambda_k'), beta_k: document.getElementById('beta_k'),
+            beta_c: document.getElementById('beta_c'), periods: document.getElementById('periods'),
+            lambda_k_alt: document.getElementById('lambda_k_alt'),
+        };
+
+        // --- 2. Chart.js Global Font Configuration ---
+        Chart.defaults.font.family = "'JetBrains Mono', monospace";
+        Chart.defaults.font.size = 12;
+        Chart.defaults.color = getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim();
+
+        // --- 3. Chart.js Initialization ---
+        const ctx1 = document.getElementById('mainScenarioChart').getContext('2d');
+        const mainScenarioChart = new Chart(ctx1, {
+            type: 'line',
+            data: { 
+                labels: [], 
+                datasets: [
+                    { label: 'Total Output (Yt)', data: [], borderColor: '#3b82f6', borderWidth: 2, pointRadius: 0, tension: 0.1 },
+                    { label: 'Consumption (Ct)', data: [], borderColor: '#84cc16', borderWidth: 2, pointRadius: 0, tension: 0.1 },
+                    { label: 'Investment (It)', data: [], borderColor: '#f97316', borderWidth: 2, pointRadius: 0, tension: 0.1 }
+                ] 
+            },
+            options: { 
+                responsive: true, 
+                plugins: { title: { display: true, text: 'Evolution of Output, Consumption, and Investment', font: { size: 16 } }, legend: { position: 'top' } }, 
+                scales: { x: { title: { display: true, text: 'Time (Periods)' } }, y: { title: { display: true, text: 'Value' }, beginAtZero: true } } 
+            }
+        });
+
+        const ctx3 = document.getElementById('comparisonChart').getContext('2d');
+        const comparisonChart = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    { label: 'Consumption (Primary λₖ)', data: [], borderColor: '#84cc16', borderWidth: 2, pointRadius: 0, tension: 0.1 },
+                    { label: 'Consumption (Alternative λₖ)', data: [], borderColor: '#ef4444', borderWidth: 2, pointRadius: 0, borderDash: [5, 5] }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: { title: { display: true, text: 'Consumption Trade-Off (λₖ Comparison)', font: { size: 16 } }, legend: { position: 'top' } },
+                scales: { x: { title: { display: true, text: 'Time (Periods)' }, beginAtZero: true }, y: { title: { display: true, text: 'Consumption (Ct)' }, beginAtZero: true } }
+            }
+        });
+
+        // --- 4. Core Simulation Logic ---
+        function runFeldmanMahalanobis(params) {
+            const periods = params.periods;
+            const Yt = new Array(periods).fill(0);
+            const Ct = new Array(periods).fill(0);
+            const It = new Array(periods).fill(0);
+
+            // Calculate initial conditions
+            const I0 = params.alpha0 * params.Y0;
+            const C0 = params.Y0 * (1 - params.alpha0);
+            
+            // Ensure lambda_k is not 1 (to avoid division by zero) and not 0
+            let lambda_k = params.lambda_k;
+            if (lambda_k <= 0) lambda_k = 0.001;
+            if (lambda_k >= 1) lambda_k = 0.999;
+            
+            const lambda_c = 1 - lambda_k;
+
+            // Calculate growth factors
+            const growth_rate_factor = (1 + lambda_k * params.beta_k);
+            // This term can be zero if beta_k is zero, handle that
+            const consumption_factor = (lambda_k * params.beta_k > 0) 
+                ? I0 * (lambda_c * params.beta_c) / (lambda_k * params.beta_k)
+                : 0;
+
+            for (let t = 0; t < periods; t++) {
+                const common_growth_term = (growth_rate_factor ** t);
+                
+                // Calculate Investment at time t
+                It[t] = I0 * common_growth_term;
+                
+                // Calculate Consumption at time t
+                Ct[t] = C0 + consumption_factor * (common_growth_term - 1);
+                
+                // Calculate Total Output at time t
+                Yt[t] = Ct[t] + It[t];
+            }
+
+            return { Yt, Ct, It };
+        }
+
+        // --- 5. Update Function and Event Listeners ---
+        function updateSimulation() {
+            const params = {
+                Y0: parseFloat(controls.Y0.value),
+                alpha0: parseFloat(controls.alpha0.value),
+                lambda_k: parseFloat(controls.lambda_k.value),
+                beta_k: parseFloat(controls.beta_k.value),
+                beta_c: parseFloat(controls.beta_c.value),
+                periods: parseInt(controls.periods.value),
+                lambda_k_alt: parseFloat(controls.lambda_k_alt.value),
+            };
+            
+            // Run primary simulation
+            const params_main = { ...params };
+            const results_main = runFeldmanMahalanobis(params_main);
+
+            // Run alternative simulation
+            const params_alt = { ...params, lambda_k: params.lambda_k_alt };
+            const results_alt = runFeldmanMahalanobis(params_alt);
+            
+            const time_periods = Array.from({ length: params.periods }, (_, i) => i);
+
+            // Update main chart
+            mainScenarioChart.data.labels = time_periods;
+            mainScenarioChart.data.datasets[0].data = results_main.Yt;
+            mainScenarioChart.data.datasets[1].data = results_main.Ct;
+            mainScenarioChart.data.datasets[2].data = results_main.It;	
+            mainScenarioChart.update('none');
+
+            // Update comparison chart
+            comparisonChart.data.labels = time_periods;
+            comparisonChart.data.datasets[0].data = results_main.Ct;
+            comparisonChart.data.datasets[1].data = results_alt.Ct;
+            comparisonChart.update('none');
+        }
+
+        Object.values(controls).forEach(input => {
+            input.addEventListener('input', updateSimulation);
+        });
+
+        // Initial Run on page load
+        updateSimulation();
+
+    </script>
+</div>
+<hr>
+
+<h2 id="History">The History and Assumptions of the Feldman-Mahalanobis Model</h2>
+<p>In 1928, Grigory Feldman created a model to help forecast growth in the Soviet Economy. The model assumed
+a closed economy, no diminishing marginal product of capital, no constraint from the labor supply, no role
+for entrepreneurship, and that all growth came from the capital goods sector.
+</p>
+<p> In the Soviet Union, while simplistic, these assumptions were not unreasonable. The Soviet Union could not rely on trade 
+with the capitalist world for industrialization, private enterprise was all but banned,
+they had a vast rural population that could be moved to the cities to do work, 
+and they had deposits of virtually every natural resource, save potentially for rubber. A heavy industry first, largely self-reliant
+industrialization campaign, as promoted by the model, was a reasonable course of action given their conditions.</p>
+<p> P.C. Mahalanobis's philosophically similar model was much less apt for the Indian situation. The largest industries in India at the time of the Second Five Year Plan
+were cotton mills, jute mills, and tea plantations, none of which produced capital goods. Emboldened by the Prebisch-Singer hypothesis of the time, stating the price
+of primary commodities would decrease over time relative to manufactured goods, and as such less developed countries would never be able to catch-up through the export
+of them, emboldened the hostility to trade.</p>
+<p> The Indian Private Sector had little capacity to produce capital goods, such as machine tooling and vehicles, leading to a sense the government needed to step in to promoted
+their domestic manufacture. Otherwise, they believed, India would be forever dependent on foreign nations for the import of capital goods, whose price would continue to rise relative
+to their primary exports, keeping them in poverty indefinitely. Following this line of thought prevalent at the time, Mahalanobis concluded that India would never be able to import
+enough capital goods to industrialize, and thus top priority needed to be given to jumpstarting a domestic capital goods sector. It was feared export-oriented textile industries,
+which had been performing well under British rule, would siphon away valuable capital goods, and restricted them severely. In 1948, the Cotton Textiles Control Order froze capacity, raised taxes,
+and forced factories to use hand looms rather than mechanize. This backfired, sending much of the industry underground to small firms that could evade government
+supervision, emboldening corruption and preventing them from receiving financing for expansion.</p>
+<p>Emboldened by his model, Nehru's INC embarked on the second five year plan, shifting focus from agriculture to heavy industry to help jumpstart Indian development.</p>
+<p style="text-align: center;"><p style="text-align: center;"><em>"Rapid industrialisation and diversification of the economy is thus the core of development. But if industrialisation is to be rapid enough, the country must aim at developing basic industries and industries which make machines to make
+the machines needed for further development"</em></p>
+<p style="text-align: center;"> -Second Five Year Plan</p>
+<p>This economic policy, rather than creating runaway industrial development, stunted India. As Taiwan, Hong Kong, and Singapore welcomed the development of an export-oriented textile industry,
+India's hostile policy stunted the growth of valuable export industries without jump-starting industrial growth. India, once one of the most industrialized economies in East Asia, quickly
+began to stagnate and fall behind.</p>
+<p>Perhaps the most crucial failing of P.C. Mahalanobis was, inspired by the Prebisch-Singer hypothesis, assuming the export earnings of India could not be increased.
+If you remove this false assumption, then the rate of investment does <em> not</em> equal the domestic output of capital goods.
+</p>
+<p> While it is hard to categorize the Indian experience with planning as anything other than an abject failure, and while the Feldman-Mahalanobis model is not used by modern economists, it is
+of historical significance and an interesting tool for understanding how decolonial planners viewed the world. An alternative model is the  <a href="solowswan.html">Solow-Swan</a> model, which while
+simpler than cutting-edge economic models, remains used in education on growth modeling.
+</p>
+<h2 id="Cite">Citations</h2>
+<div style="text-indent: -36px; padding-left: 36px;">
+</div>
+<hr>
+
+<h2 id="Contact">Contact</h2>
+
+<p>I've enjoyed putting together this website. Full credit to the <a
+href="https://github.com/owickstrom/the-monospace-web">Monospace Web</a>, who created the template used for this.</p>
+<p> If you'd like to contact me, my information is below</p>
+<p><tab>Brendan Heaney, Binghamton University Class of 2027</p>
+ <p>Personal Email:<em> brendantheaney@gmail.com</em></p>
+ <p>    University Email:<em> bheaney@binghamton.edu</em></p>
+ <p><a href="https://www.linkedin.com/in/brendan-heaney-573815214/">My LinkedIn</a></p>
+
+ <p><a href="index.html">Homepage</a></p>
+
+  <div class="debug-grid"></div>
+  <script src="src/index.js"></script>
+
+</body>
+</html>
