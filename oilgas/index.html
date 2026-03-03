@@ -70,21 +70,18 @@
 
 <h2>Notes</h2>
 <p>
-  Bar height is symlog-scaled. Only counties with non-zero production are shown.
+  Bar height is logarithmically saled.
   Scroll to zoom, drag to pan. Hover a county to see exact values.
   Gas is measured in MCF (thousands of cubic feet).
 </p>
 
 <h2>Data Sources</h2>
 <p>
-  Production values for <strong>2000&ndash;2011</strong> are drawn from the USDA ERS county-level
-  dataset, which covers onshore production in the lower 48 states. This source captures
-  approximately 60% of EIA-reported national totals; offshore production is excluded by design.
+  Production values for <strong>2000&ndash;2011</strong> are drawn from the excellent USDA ERS county-level
+  dataset, which covers onshore production in the lower 48 states.
   Values for <strong>1970&ndash;1999</strong> and <strong>2012&ndash;2020</strong> are spatially
   aggregated from the USGS well-history dataset and match approximately 95&ndash;99% of
-  EIA-reported national totals. A <strong>discontinuity at the 2011&ndash;2012 boundary</strong>
-  reflects the difference in source coverage, not an actual step change in production.
-  Pre-1970 USGS data was excluded due to poor digitization coverage.
+  EIA-reported national totals, and are slightly imperfect but seem to largely agree with other sources on the topic. UGS's data from before 1970 was excluded due to being sparse and unreliable.
 </p>
 
 <h3>Citations</h3>
@@ -116,5 +113,17 @@
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
 <script type="module" src="js/main.js"></script>
+  
+<h2 id="Contact">Contact</h2>
+
+<p>I've enjoyed putting together this website. Full credit to the <a
+href="https://github.com/owickstrom/the-monospace-web">Monospace Web</a>, who created the template used for this.</p>
+<p> If you'd like to contact me, my information is below</p>
+<p><tab>Brendan Heaney, Binghamton University Class of 2027</p>
+ <p>Personal Email:<em> brendantheaney@gmail.com</em></p>
+ <p>    University Email:<em> bheaney@binghamton.edu</em></p>
+ <p><a href="https://www.linkedin.com/in/brendan-heaney-573815214/">My LinkedIn</a></p>
+
+ <p><a href="index.html">Homepage</a></p>
 </body>
 </html>
