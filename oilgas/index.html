@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>American Resource Production</title>
+  <link rel="stylesheet" href="the-monospace-web-main/src/reset.css" />
+  <link rel="stylesheet" href="the-monospace-web-main/src/index.css" />
+  <link rel="stylesheet" href="css/map.css" />
+</head>
+<body>
+
+<table class="header">
+  <tr>
+    <td colspan="2" rowspan="2" class="width-auto">
+      <h1 class="title">AMERICAN RESOURCE PRODUCTION</h1>
+      <span class="subtitle">County-level oil &amp; gas &middot; 1970&ndash;2020</span>
+    </td>
+    <th>Source</th>
+    <td class="width-min">USDA ERS / USGS</td>
+  </tr>
+  <tr>
+    <th>Coverage</th>
+    <td class="width-min"><time>1970&ndash;2020</time></td>
+  </tr>
+  <tr>
+    <th class="width-min">Author</th>
+    <td class="width-auto">Brendan Heaney</td>
+    <th class="width-min">Updated</th>
+    <td class="width-min"><time>2026-03-02</time></td>
+  </tr>
+</table>
+
+<label class="debug-toggle-label"><input type="checkbox" class="debug-toggle" /> Debug mode</label>
+
+<h2>Map</h2>
+
+<form class="grid" id="controls-form">
+  <label>RESOURCE
+    <select id="resource-select"></select>
+  </label>
+  <label>START YEAR
+    <select id="start-year-select"></select>
+  </label>
+  <label>END YEAR
+    <select id="end-year-select"></select>
+  </label>
+</form>
+
+<div id="map-container">
+  <svg id="map-svg" viewBox="0 0 975 610" preserveAspectRatio="xMidYMid meet">
+    <g id="zoom-group">
+      <g id="counties-layer"></g>
+      <g id="states-layer"></g>
+      <g id="bars-layer"></g>
+    </g>
+  </svg>
+</div>
+
+<div id="tooltip"></div>
+
+<h2>Key</h2>
+
+<figure>
+<pre id="legend-text">
+  Loading legend...
+</pre>
+<figcaption>Each bar pair represents one producing county. Left bar = start year, right bar = end year.</figcaption>
+</figure>
+
+<h2>Notes</h2>
+<p>
+  Bar height is symlog-scaled. Only counties with non-zero production are shown.
+  Scroll to zoom, drag to pan. Hover a county to see exact values.
+  Gas is measured in MCF (thousands of cubic feet).
+</p>
+
+<h2>Data Sources</h2>
+<p>
+  Production values for <strong>2000&ndash;2011</strong> are drawn from the USDA ERS county-level
+  dataset, which covers onshore production in the lower 48 states. This source captures
+  approximately 60% of EIA-reported national totals; offshore production is excluded by design.
+  Values for <strong>1970&ndash;1999</strong> and <strong>2012&ndash;2020</strong> are spatially
+  aggregated from the USGS well-history dataset and match approximately 95&ndash;99% of
+  EIA-reported national totals. A <strong>discontinuity at the 2011&ndash;2012 boundary</strong>
+  reflects the difference in source coverage, not an actual step change in production.
+  Pre-1970 USGS data was excluded due to poor digitization coverage.
+</p>
+
+<h3>Citations</h3>
+<ol>
+  <li>
+    U.S. Department of Agriculture, Economic Research Service.
+    <em>County-Level Oil and Gas Production in the United States.</em>
+    Washington, DC: USDA ERS, 2014.
+    <a href="https://www.ers.usda.gov/data-products/county-level-oil-and-gas-production-in-the-united-states">https://www.ers.usda.gov/data-products/county-level-oil-and-gas-production-in-the-united-states</a>.
+  </li>
+  <li>
+    Skinner, Christopher C., Robert F. Miller, Scott A. Kinney, Nicholas J. Gianoutsos,
+    Gregory L. Gunther, and Chilisa M. Shorten.
+    &ldquo;Aggregated Oil and Natural Gas Drilling and Production History of the United States
+    (ver.&nbsp;1.1, April 2023).&rdquo;
+    U.S. Geological Survey Data Release, 2022.
+    <a href="https://doi.org/10.5066/P9UIR5HE">https://doi.org/10.5066/P9UIR5HE</a>.
+  </li>
+  <li>
+    Bostock, Mike. <em>us-atlas: U.S. Atlas TopoJSON.</em>
+    <a href="https://github.com/topojson/us-atlas">https://github.com/topojson/us-atlas</a>.
+    Derived from U.S. Census Bureau TIGER/Line Shapefiles.
+  </li>
+</ol>
+
+<div class="debug-grid"></div>
+
+<script src="the-monospace-web-main/src/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
