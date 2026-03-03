@@ -62,7 +62,8 @@ export function renderBars(barsLayer, features, data, state, topology) {
 
     g.on('mouseover', (event) => showTooltip(event, geoid))
      .on('mousemove', (event) => moveTooltip(event))
-     .on('mouseout', hideTooltip);
+     .on('mouseout', hideTooltip)
+     .on('click', (event) => { event.stopPropagation(); showTooltip(event, geoid); });
   }
 
   return heightScale;
@@ -124,6 +125,7 @@ export function updateBars(barsLayer, features, data, state) {
 
     g.on('mouseover', (event) => showTooltip(event, geoid))
      .on('mousemove', (event) => moveTooltip(event))
-     .on('mouseout', hideTooltip);
+     .on('mouseout', hideTooltip)
+     .on('click', (event) => { event.stopPropagation(); showTooltip(event, geoid); });
   }
 }

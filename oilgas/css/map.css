@@ -67,3 +67,18 @@
 .county-bar-group:hover rect {
   opacity: 1 !important;
 }
+
+/* Mobile: pin tooltip to bottom of screen instead of following cursor */
+@media (max-width: 640px) {
+  #tooltip {
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    top: auto !important;
+    min-width: unset;
+    white-space: pre-wrap;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+}

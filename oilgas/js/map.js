@@ -29,7 +29,12 @@ export function initMap(data, topology, state) {
       showTooltip(event, geoid);
     })
     .on('mousemove', moveTooltip)
-    .on('mouseout', hideTooltip);
+    .on('mouseout', hideTooltip)
+    .on('click', function(event, d) {
+      event.stopPropagation();
+      const geoid = String(d.id).padStart(5, '0');
+      showTooltip(event, geoid);
+    });
 
   // Draw state borders
   statesLayer.append('path')
@@ -49,6 +54,9 @@ export function initMap(data, topology, state) {
     .on('zoom', e => zoomGroup.attr('transform', e.transform));
 
   svg.call(zoom);
+
+  // Tap empty map area to dismiss tooltip on mobile
+  svg.on('click', hideTooltip);
 
   // Double-click to reset zoom
   svg.on('dblclick.zoom', null);
