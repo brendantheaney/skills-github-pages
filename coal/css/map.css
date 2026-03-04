@@ -1,0 +1,84 @@
+#map-container {
+  margin-bottom: var(--line-height);
+}
+
+#map-container svg {
+  color: var(--text-color);
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: grab;
+}
+
+#map-container svg:active {
+  cursor: grabbing;
+}
+
+#tooltip {
+  position: fixed;
+  border: var(--border-thickness) solid var(--text-color);
+  padding: calc(var(--line-height) / 2) 1ch;
+  background: var(--background-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  pointer-events: none;
+  display: none;
+  z-index: 100;
+  min-width: 28ch;
+  white-space: pre;
+}
+
+.county-path {
+  fill: var(--background-color);
+  stroke: var(--text-color);
+  stroke-opacity: 0.25;
+  stroke-width: 0.5;
+}
+
+.county-path:hover {
+  stroke-opacity: 0.6;
+}
+
+.state-border {
+  fill: none;
+  stroke: var(--text-color);
+  stroke-opacity: 0.6;
+  stroke-width: 1;
+  pointer-events: none;
+}
+
+.nation-border {
+  fill: none;
+  stroke: var(--text-color);
+  stroke-opacity: 0.6;
+  stroke-width: 1;
+  pointer-events: none;
+}
+
+.county-bar-group {
+  cursor: pointer;
+}
+
+.county-bar-group rect {
+  transition: opacity 0.1s;
+}
+
+.county-bar-group:hover rect {
+  opacity: 1 !important;
+}
+
+/* Mobile: pin tooltip to bottom of screen instead of following cursor */
+@media (max-width: 640px) {
+  #tooltip {
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    top: auto !important;
+    min-width: unset;
+    white-space: pre-wrap;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+}
