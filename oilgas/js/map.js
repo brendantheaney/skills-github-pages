@@ -14,8 +14,10 @@ export function initMap(data, topology, state) {
   const path = d3.geoPath();
 
   // Extract feature arrays
-  const countyFeatures = topojson.feature(topology, topology.objects.counties).features;
-  const stateMesh = topojson.mesh(topology, topology.objects.states, (a, b) => a !== b);
+  const countyFeatures = topojson.feature(topology, topology.objects.counties).features
+    .filter(d => { const s = String(d.id).padStart(5, '0').slice(0, 2); return s !== '02' && s !== '15'; });
+  const stateMesh = topojson.mesh(topology, topology.objects.states,
+    (a, b) => a !== b && a.id !== 2 && b.id !== 2 && a.id !== 15 && b.id !== 15);
 
   // Draw county boundaries
   countiesLayer.selectAll('path.county-path')
@@ -42,7 +44,8 @@ export function initMap(data, topology, state) {
     .attr('d', path(stateMesh));
 
   // Draw nation outline (exterior edges of states mesh — same resolution as interior borders)
-  const nationMesh = topojson.mesh(topology, topology.objects.states, (a, b) => a === b);
+  const nationMesh = topojson.mesh(topology, topology.objects.states,
+    (a, b) => a === b && a.id !== 2 && a.id !== 15);
   statesLayer.append('path')
     .attr('class', 'nation-border')
     .attr('d', path(nationMesh));
@@ -89,8 +92,8 @@ function updateLegend(state, data) {
   const fmt = d3.format('.3~s');
 
   legendEl.textContent = [
-    `  \u2588  = START YEAR (${state.startYear})    [solid]`,
-    `  \u2591  = END YEAR   (${state.endYear})    [lighter]`,
+    `  \u2591  = START YEAR (${state.startYear})    [lighter]`,
+    `  \u2588  = END YEAR   (${state.endYear})    [solid]`,
     ``,
     `  Max bar = ${fmt(maxVal)} ${res.unit}  (${res.label})`,
     `  Scale: logarithmic (symlog). Each bar = one county.`,

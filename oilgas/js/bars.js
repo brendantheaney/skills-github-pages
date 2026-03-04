@@ -46,7 +46,7 @@ export function renderBars(barsLayer, features, data, state, topology) {
         .attr('width', BAR_WIDTH)
         .attr('height', startH)
         .attr('fill', 'currentColor')
-        .attr('opacity', 1);
+        .attr('opacity', 0.55);
     }
 
     if (endH > 0) {
@@ -57,7 +57,7 @@ export function renderBars(barsLayer, features, data, state, topology) {
         .attr('width', BAR_WIDTH)
         .attr('height', endH)
         .attr('fill', 'currentColor')
-        .attr('opacity', 0.55);
+        .attr('opacity', 1);
     }
 
     g.on('mouseover', (event) => showTooltip(event, geoid))
@@ -109,7 +109,7 @@ export function updateBars(barsLayer, features, data, state) {
         .attr('width', BAR_WIDTH)
         .attr('height', startH)
         .attr('fill', 'currentColor')
-        .attr('opacity', 1);
+        .attr('opacity', 0.55);
     }
 
     if (endH > 0) {
@@ -120,7 +120,7 @@ export function updateBars(barsLayer, features, data, state) {
         .attr('width', BAR_WIDTH)
         .attr('height', endH)
         .attr('fill', 'currentColor')
-        .attr('opacity', 0.55);
+        .attr('opacity', 1);
     }
 
     g.on('mouseover', (event) => showTooltip(event, geoid))

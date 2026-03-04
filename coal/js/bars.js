@@ -45,7 +45,7 @@ function _draw(barsLayer, features, data, state) {
         .attr('width', BAR_WIDTH)
         .attr('height', startH)
         .attr('fill', res.color)
-        .attr('opacity', 1);
+        .attr('opacity', 0.55);
     }
 
     if (endH > 0) {
@@ -56,7 +56,7 @@ function _draw(barsLayer, features, data, state) {
         .attr('width', BAR_WIDTH)
         .attr('height', endH)
         .attr('fill', res.color)
-        .attr('opacity', 0.55);
+        .attr('opacity', 1);
     }
 
     g.on('mouseover', (event) => showTooltip(event, geoid))
