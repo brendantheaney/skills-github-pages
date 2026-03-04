@@ -47,6 +47,10 @@ STATE_FIPS = {
     "PA": "42", "RI": "44", "SC": "45", "SD": "46", "TN": "47",
     "TX": "48", "UT": "49", "VT": "50", "VA": "51", "WA": "53",
     "WV": "54", "WI": "55", "WY": "56",
+    # EIA uses regional sub-codes for KY, PA, WV instead of standard abbreviations
+    "KYE": "21", "KYW": "21",   # Kentucky Eastern / Western
+    "PAA": "42", "PAB": "42",   # Pennsylvania Anthracite / Bituminous
+    "WVN": "54", "WVS": "54",   # West Virginia Northern / Southern
 }
 
 ENDPOINT = "https://api.eia.gov/v2/coal/mine-production/data/"
