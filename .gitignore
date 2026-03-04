@@ -26,6 +26,14 @@
 *.sql
 *.sqlite
 
+# Build artifacts #
+###################
+*.cache.json
+
+# Claude Code session files #
+##############################
+.claude/
+
 # OS generated files #
 ######################
 .DS_Store

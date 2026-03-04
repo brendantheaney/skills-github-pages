@@ -1,0 +1,9 @@
+I want to make a tool to evaluate American staple crop yields by county over time.
+
+I already have a tool for US oil and gas production by county in the oilgas folder that you should be basing this on.
+
+I would like the data to be from NASS's Quick Stats, and contain most staple crops.
+
+Do not edit any part of the website, just create a new page and index.
+
+Please adjust the color of the bars from the gray/black of the original to a color matched to the crop being produced. 
