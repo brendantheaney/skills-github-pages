@@ -17,7 +17,7 @@ export function initMap(data, topology, state) {
   const countyFeatures = topojson.feature(topology, topology.objects.counties).features
     .filter(d => { const s = String(d.id).padStart(5, '0').slice(0, 2); return s !== '02' && s !== '15'; });
   const stateMesh = topojson.mesh(topology, topology.objects.states,
-    (a, b) => a !== b && a.id !== 2 && b.id !== 2 && a.id !== 15 && b.id !== 15);
+    (a, b) => a !== b && a.id !== '02' && b.id !== '02' && a.id !== '15' && b.id !== '15');
 
   // Draw county boundaries
   countiesLayer.selectAll('path.county-path')
@@ -45,7 +45,7 @@ export function initMap(data, topology, state) {
 
   // Draw nation outline (exterior edges of states mesh)
   const nationMesh = topojson.mesh(topology, topology.objects.states,
-    (a, b) => a === b && a.id !== 2 && a.id !== 15);
+    (a, b) => a === b && a.id !== '02' && a.id !== '15');
   statesLayer.append('path')
     .attr('class', 'nation-border')
     .attr('d', path(nationMesh));
