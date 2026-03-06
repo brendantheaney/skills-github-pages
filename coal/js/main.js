@@ -30,6 +30,10 @@ window.addEventListener('load', async () => {
       if (mapController) mapController.update(state);
     });
 
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (mapController) mapController.update(state);
+    });
+
   } catch (err) {
     console.error('Failed to initialize map:', err);
     const container = document.getElementById('map-container');

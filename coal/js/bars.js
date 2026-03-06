@@ -5,7 +5,10 @@ import { showTooltip, moveTooltip, hideTooltip } from './tooltip.js';
 
 const BAR_WIDTH = 2.5;
 const BAR_GAP = 0.8;
-const BAR_COLOR = '#4A3F35';  // dark coal-brown (anthracite)
+
+function getBarColor() {
+  return getComputedStyle(document.documentElement).getPropertyValue('--coal-bar-color').trim() || '#4A3F35';
+}
 
 export function renderBars(barsLayer, features, data, state, topology) {
   const path = d3.geoPath();
@@ -13,6 +16,7 @@ export function renderBars(barsLayer, features, data, state, topology) {
   const res = data.resources.find(r => r.id === state.resource);
   if (!res) return null;
 
+  const BAR_COLOR = getBarColor();
   const heightScale = buildHeightScale(data.maxValues.get(state.resource));
 
   // Clear existing bars
@@ -74,6 +78,7 @@ export function updateBars(barsLayer, features, data, state) {
   const res = data.resources.find(r => r.id === state.resource);
   if (!res) return;
 
+  const BAR_COLOR = getBarColor();
   const heightScale = buildHeightScale(data.maxValues.get(state.resource));
 
   const path = d3.geoPath();

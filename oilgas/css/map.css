@@ -32,12 +32,18 @@
 .county-path {
   fill: var(--background-color);
   stroke: var(--text-color);
-  stroke-opacity: 0.25;
+  stroke-opacity: 0.30;
   stroke-width: 0.5;
 }
 
 .county-path:hover {
   stroke-opacity: 0.6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .county-path {
+    stroke-opacity: 0.35;
+  }
 }
 
 .state-border {

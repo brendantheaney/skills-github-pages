@@ -2,14 +2,14 @@
 
 export async function loadData() {
   const crops = [
-    { id: 'corn',     label: 'CORN',     color: '#B89030', units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
-    { id: 'soybeans', label: 'SOYBEANS', color: '#5A7E45', units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
-    { id: 'wheat',    label: 'WHEAT',    color: '#A8844A', units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
-    { id: 'cotton',   label: 'COTTON',   color: '#6090A0', units: { prod: '480-LB BALES', yield: 'LB/ACRE' }, years: d3.range(1997, 2024) },
-    { id: 'sorghum',  label: 'SORGHUM',  color: '#904035', units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
-    { id: 'barley',   label: 'BARLEY',   color: '#887048', units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
-    { id: 'oats',     label: 'OATS',     color: '#706020', units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
-    { id: 'rice',     label: 'RICE',     color: '#3A7855', units: { prod: 'CWT',          yield: 'LB/ACRE' }, years: d3.range(1997, 2024) },
+    { id: 'corn',     label: 'CORN',     cssVar: '--bar-color-corn',     units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
+    { id: 'soybeans', label: 'SOYBEANS', cssVar: '--bar-color-soybeans', units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
+    { id: 'wheat',    label: 'WHEAT',    cssVar: '--bar-color-wheat',    units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
+    { id: 'cotton',   label: 'COTTON',   cssVar: '--bar-color-cotton',   units: { prod: '480-LB BALES', yield: 'LB/ACRE' }, years: d3.range(1997, 2024) },
+    { id: 'sorghum',  label: 'SORGHUM',  cssVar: '--bar-color-sorghum',  units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
+    { id: 'barley',   label: 'BARLEY',   cssVar: '--bar-color-barley',   units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
+    { id: 'oats',     label: 'OATS',     cssVar: '--bar-color-oats',     units: { prod: 'BU',           yield: 'BU/ACRE' }, years: d3.range(1997, 2024) },
+    { id: 'rice',     label: 'RICE',     cssVar: '--bar-color-rice',     units: { prod: 'CWT',          yield: 'LB/ACRE' }, years: d3.range(1997, 2024) },
   ];
 
   const metrics = [

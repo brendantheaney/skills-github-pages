@@ -12,6 +12,7 @@ function _draw(barsLayer, features, data, state) {
   const crop = data.crops.find(c => c.id === state.crop);
   if (!crop) return;
 
+  const color = getComputedStyle(document.documentElement).getPropertyValue(crop.cssVar).trim();
   const key = `${crop.id}_${state.metric}`;
   const heightScale = buildHeightScale(data.maxValues.get(key), 22);
 
@@ -45,7 +46,7 @@ function _draw(barsLayer, features, data, state) {
         .attr('y', cy - startH)
         .attr('width', BAR_WIDTH)
         .attr('height', startH)
-        .attr('fill', crop.color)
+        .attr('fill', color)
         .attr('opacity', 1);
     }
 
@@ -56,7 +57,7 @@ function _draw(barsLayer, features, data, state) {
         .attr('y', cy - endH)
         .attr('width', BAR_WIDTH)
         .attr('height', endH)
-        .attr('fill', crop.color)
+        .attr('fill', color)
         .attr('opacity', 0.55);
     }
 
