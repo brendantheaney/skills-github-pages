@@ -17,6 +17,9 @@ export function renderBars(barsLayer, features, data, state, topology) {
   if (!res) return null;
 
   const BAR_COLOR = getBarColor();
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const STROKE = isDark ? 'rgba(255,255,255,0.30)' : 'none';
+  const STROKE_WIDTH = isDark ? 0.8 : 0;
   const heightScale = buildHeightScale(data.maxValues.get(state.resource));
 
   // Clear existing bars
@@ -51,6 +54,8 @@ export function renderBars(barsLayer, features, data, state, topology) {
         .attr('width', BAR_WIDTH)
         .attr('height', startH)
         .attr('fill', BAR_COLOR)
+        .attr('stroke', STROKE)
+        .attr('stroke-width', STROKE_WIDTH)
         .attr('opacity', 1);
     }
 
@@ -62,6 +67,8 @@ export function renderBars(barsLayer, features, data, state, topology) {
         .attr('width', BAR_WIDTH)
         .attr('height', endH)
         .attr('fill', BAR_COLOR)
+        .attr('stroke', STROKE)
+        .attr('stroke-width', STROKE_WIDTH)
         .attr('opacity', 0.55);
     }
 
@@ -79,6 +86,9 @@ export function updateBars(barsLayer, features, data, state) {
   if (!res) return;
 
   const BAR_COLOR = getBarColor();
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const STROKE = isDark ? 'rgba(255,255,255,0.30)' : 'none';
+  const STROKE_WIDTH = isDark ? 0.8 : 0;
   const heightScale = buildHeightScale(data.maxValues.get(state.resource));
 
   const path = d3.geoPath();
@@ -114,6 +124,8 @@ export function updateBars(barsLayer, features, data, state) {
         .attr('width', BAR_WIDTH)
         .attr('height', startH)
         .attr('fill', BAR_COLOR)
+        .attr('stroke', STROKE)
+        .attr('stroke-width', STROKE_WIDTH)
         .attr('opacity', 1);
     }
 
@@ -125,6 +137,8 @@ export function updateBars(barsLayer, features, data, state) {
         .attr('width', BAR_WIDTH)
         .attr('height', endH)
         .attr('fill', BAR_COLOR)
+        .attr('stroke', STROKE)
+        .attr('stroke-width', STROKE_WIDTH)
         .attr('opacity', 0.55);
     }
 
