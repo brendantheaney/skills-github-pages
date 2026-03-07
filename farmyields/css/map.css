@@ -1,27 +1,4 @@
-/* Bar colors — defined as CSS variables so dark mode overrides work */
-:root {
-  --bar-color-corn:     #B89030;
-  --bar-color-soybeans: #5A7E45;
-  --bar-color-wheat:    #A8844A;
-  --bar-color-cotton:   #6090A0;
-  --bar-color-sorghum:  #904035;
-  --bar-color-barley:   #887048;
-  --bar-color-oats:     #706020;
-  --bar-color-rice:     #3A7855;
-}
-
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bar-color-corn:     #D4AA40;
-    --bar-color-soybeans: #7AB85E;
-    --bar-color-wheat:    #C8A860;
-    --bar-color-cotton:   #80B4C8;
-    --bar-color-sorghum:  #C05A4A;
-    --bar-color-barley:   #A88E60;
-    --bar-color-oats:     #988035;
-    --bar-color-rice:     #4EA876;
-  }
-
   .county-path {
     stroke-opacity: 0.35;
   }

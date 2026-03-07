@@ -2,13 +2,9 @@
 
 export async function loadData() {
   const resources = [
-    {
-      id: 'coal',
-      label: 'COAL',
-      unit: 'short tons',
-      fieldPrefix: 'coal',
-      years: d3.range(2000, 2024),
-    },
+    { id: 'total',       label: 'COAL (TOTAL)',    fieldPrefix: 'coal',        unit: 'short tons', color: '#3D3D3D', darkColor: '#D4A868', years: d3.range(2001, 2025) },
+    { id: 'surface',     label: 'SURFACE MINING',  fieldPrefix: 'surface',     unit: 'short tons', color: '#7A5C2E', darkColor: '#C8A850', years: d3.range(2001, 2025) },
+    { id: 'underground', label: 'UNDERGROUND',      fieldPrefix: 'underground', unit: 'short tons', color: '#3A4A6A', darkColor: '#7090C8', years: d3.range(2001, 2025) },
   ];
 
   const rows = await d3.csv('data/production.csv');
@@ -26,6 +22,7 @@ export async function loadData() {
     counties.set(geoid, parsed);
   }
 
+  // Build maxValues keyed by resource id
   const maxValues = new Map();
   for (const res of resources) {
     let max = 0;

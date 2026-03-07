@@ -12,7 +12,9 @@ function _draw(barsLayer, features, data, state) {
   const crop = data.crops.find(c => c.id === state.crop);
   if (!crop) return;
 
-  const color = getComputedStyle(document.documentElement).getPropertyValue(crop.cssVar).trim();
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const BAR_COLOR = isDark ? crop.darkColor : crop.color;
+
   const key = `${crop.id}_${state.metric}`;
   const heightScale = buildHeightScale(data.maxValues.get(key), 22);
 
@@ -46,8 +48,8 @@ function _draw(barsLayer, features, data, state) {
         .attr('y', cy - startH)
         .attr('width', BAR_WIDTH)
         .attr('height', startH)
-        .attr('fill', color)
-        .attr('opacity', 1);
+        .attr('fill', BAR_COLOR)
+        .attr('opacity', 0.55);
     }
 
     if (endH > 0) {
@@ -57,8 +59,8 @@ function _draw(barsLayer, features, data, state) {
         .attr('y', cy - endH)
         .attr('width', BAR_WIDTH)
         .attr('height', endH)
-        .attr('fill', color)
-        .attr('opacity', 0.55);
+        .attr('fill', BAR_COLOR)
+        .attr('opacity', 1);
     }
 
     g.on('mouseover', (event) => showTooltip(event, geoid))
