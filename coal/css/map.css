@@ -5,7 +5,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --coal-bar-color: #A08060;  /* warm medium brown — clearly visible on black */
+    --coal-bar-color: #D4A868;  /* light amber-gold — ~9:1 contrast on black */
+  }
+
+  .county-bar-group rect {
+    stroke: rgba(255, 255, 255, 0.30);
+    stroke-width: 0.8;
   }
 
   .county-path {
