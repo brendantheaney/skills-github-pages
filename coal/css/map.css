@@ -1,13 +1,4 @@
-/* Bar color — defined as CSS variable so dark mode override works */
-:root {
-  --coal-bar-color: #4A3F35;
-}
-
 @media (prefers-color-scheme: dark) {
-  :root {
-    --coal-bar-color: #D4A868;  /* light amber-gold — ~9:1 contrast on black */
-  }
-
   .county-path {
     stroke-opacity: 0.35;
   }

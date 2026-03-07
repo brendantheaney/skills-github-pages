@@ -6,19 +6,16 @@ import { showTooltip, moveTooltip, hideTooltip } from './tooltip.js';
 const BAR_WIDTH = 2.5;
 const BAR_GAP = 0.8;
 
-function getBarColor() {
-  return getComputedStyle(document.documentElement).getPropertyValue('--coal-bar-color').trim() || '#4A3F35';
-}
-
 export function renderBars(barsLayer, features, data, state, topology) {
   const path = d3.geoPath();
 
   const res = data.resources.find(r => r.id === state.resource);
   if (!res) return null;
 
-  const BAR_COLOR = getBarColor();
   const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const STROKE = isDark ? 'rgba(255,255,255,0.30)' : 'none';
+  const BAR_COLOR = isDark ? '#D4A868' : '#4A3F35';
+  const STROKE = isDark ? '#ffffff' : 'none';
+  const STROKE_OPACITY = isDark ? 0.3 : 0;
   const STROKE_WIDTH = isDark ? 0.8 : 0;
   const heightScale = buildHeightScale(data.maxValues.get(state.resource));
 
@@ -55,6 +52,7 @@ export function renderBars(barsLayer, features, data, state, topology) {
         .attr('height', startH)
         .attr('fill', BAR_COLOR)
         .attr('stroke', STROKE)
+        .attr('stroke-opacity', STROKE_OPACITY)
         .attr('stroke-width', STROKE_WIDTH)
         .attr('opacity', 1);
     }
@@ -68,6 +66,7 @@ export function renderBars(barsLayer, features, data, state, topology) {
         .attr('height', endH)
         .attr('fill', BAR_COLOR)
         .attr('stroke', STROKE)
+        .attr('stroke-opacity', STROKE_OPACITY)
         .attr('stroke-width', STROKE_WIDTH)
         .attr('opacity', 0.55);
     }
@@ -85,9 +84,10 @@ export function updateBars(barsLayer, features, data, state) {
   const res = data.resources.find(r => r.id === state.resource);
   if (!res) return;
 
-  const BAR_COLOR = getBarColor();
   const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const STROKE = isDark ? 'rgba(255,255,255,0.30)' : 'none';
+  const BAR_COLOR = isDark ? '#D4A868' : '#4A3F35';
+  const STROKE = isDark ? '#ffffff' : 'none';
+  const STROKE_OPACITY = isDark ? 0.3 : 0;
   const STROKE_WIDTH = isDark ? 0.8 : 0;
   const heightScale = buildHeightScale(data.maxValues.get(state.resource));
 
@@ -125,6 +125,7 @@ export function updateBars(barsLayer, features, data, state) {
         .attr('height', startH)
         .attr('fill', BAR_COLOR)
         .attr('stroke', STROKE)
+        .attr('stroke-opacity', STROKE_OPACITY)
         .attr('stroke-width', STROKE_WIDTH)
         .attr('opacity', 1);
     }
@@ -138,6 +139,7 @@ export function updateBars(barsLayer, features, data, state) {
         .attr('height', endH)
         .attr('fill', BAR_COLOR)
         .attr('stroke', STROKE)
+        .attr('stroke-opacity', STROKE_OPACITY)
         .attr('stroke-width', STROKE_WIDTH)
         .attr('opacity', 0.55);
     }
