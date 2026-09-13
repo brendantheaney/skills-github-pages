@@ -1,0 +1,145 @@
+\documentclass[11pt,letterpaper]{article}
+
+% Page layout and typography
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% Mathematics, tables, and references
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{url}
+
+\setcounter{MaxMatrixCols}{30}
+\allowdisplaybreaks
+
+% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}[proposition]{Lemma}
+\newtheorem{corollary}[proposition]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[proposition]{Definition}
+\newtheorem{algorithm}[proposition]{Algorithm}
+\newtheorem{example}{Example}
+\newtheorem{notation}[example]{Notation}
+
+\theoremstyle{remark}
+\newtheorem{remark}[example]{Remark}
+
+\title{Note on Hong and Sommese's conjectures on Critical Points
+  of Cyclotomic Polynomials}
+\author{Brendan Heaney\thanks{Binghamton University, Class of 2027
+  (\texttt{brendantheaney@gmail.com}).}}
+\date{September 13, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+In this note we provide the results of computational checks on the various
+conjectures of Hong and Sommese's ``Number of Real Critical Points of
+Cyclotomic Polynomials.'' We find a family of counterexamples to conjecture
+3[3] and provide a strengthened form of conjecture 3[2] suggested by our numerical search.
+\end{abstract}
+
+\section{Introduction}
+
+We place some examples below
+
+First, we reintroduce some of their notation. For an odd squarefree integer
+\(m>1\), the authors define \(N_m\) to be the number of zeroes of the
+derivative of the mth cyclotomic polynomial. We define Drop to refer to a
+decrease in the number of roots \(\Phi_m'\), Hong and Sommese conjectured
+that, for an odd squarefree integer n and primes \(p,p',\ p<p',\ p,p'\nmid n\), the following statement
+holds(Conjecture~3[3]):
+\[
+N_{np}\le N_{np'}
+\]
+
+However, in our numerical search, we found a large variety counterexamples to this conjecture. We provide some interesting examples below.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{@{}lrrccr@{}}
+\toprule
+Base \(n\) & \(p\) & \(p'\) & \(N_{np}\) & \(N_{np'}\) & Drop \\
+\midrule
+\(3\cdot59=177\) & 5 & 7 & \(7\) & \(6\) & 2 \\
+\(3\cdot67\cdot71=14271\) & 5 & 11 & \(11\) & \(7\) & 4 \\
+\(3\cdot5\cdot7\cdot61=6405\) & 149 & 151 & \(15\) & \(13\) & 2 \\
+\bottomrule
+\end{tabular}
+\caption{Example failures of conjecture 3[3]}
+\end{table}
+
+
+\clearpage
+\section{Numerical Check}
+
+Using GPT-6 Astra for coding, we run a numerical check across 1,325,192 polynomials using the proxy $D_r (x)$ as defined in their paper
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{@{}crr@{}}
+\toprule
+Number of prime factors & Each prime below & Polynomials checked \\
+\midrule
+2 & 200   & 990     \\
+3 & 1,000 & 762,355 \\
+4 & 200   & 148,995 \\
+5 & 150   & 278,256 \\
+6 & 100   & 134,596 \\
+\bottomrule
+\end{tabular}
+\caption{Numerical search space}
+\label{tab:search-domains}
+\end{table}
+
+We find 2,771,344 counterexamples to conjecture 3[3] as discussed previously.
+
+No counterexamples to conjecture 3[1] and 3[2] were fond in our search. 
+.
+\section{An Observation}
+Hong and Sommese propose the following conjecture.
+\setcounter{theorem}{2}
+
+\begin{conjecture}
+\[
+N_n=2k-1
+\quad\text{if n is the product of k smallest odd primes}
+\]
+\end{conjecture}
+
+We find support for two statements that, together, imply Hong and Sommesse's
+Conjecture.
+
+ We reintroduce further notation from the author's original paper. Let
+\(m=p_1\cdots p_k\) be a product of \(k\) distinct odd primes.
+Furthermore, let \(N_m^+\) and \(N_m^-\) for the numbers of positive and
+negative real zeros of \(\Phi_m'\) (counted with multiplicity).
+
+\paragraph{Conjecture}
+For every such \(m\),
+\[
+N_m^+\ge k-1,
+\qquad
+N_m^-\ge k
+\]
+These conjectures both hold for the \(1{,}326{,}776\) tested cases and, together, imply conjecture 3[2].
+
+\begingroup
+\small
+\begin{thebibliography}{1}
+\bibitem{HS}
+H.~Hong and A.~J.~Sommese,
+\emph{Number of Real Critical Points of Cyclotomic Polynomials},
+arXiv:1912.12253 (2019).
+\url{https://arxiv.org/abs/1912.12253}.
+\end{thebibliography}
+\endgroup
+
+\end{document}
